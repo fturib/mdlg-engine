@@ -1,3 +1,14 @@
+#DEMO execution of dh_segment
+demo/
+
+#IDEA env
+.idea/
+
+#VSCode env
+.vscode/
+*.code-workspace
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
