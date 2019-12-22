@@ -42,16 +42,15 @@ def format_quad_to_string(quad):
     return s[:-1]
 
 
-if __name__ == '__main__':
+def run_demo(root_folder):
 
     # If the model has been trained load the model, otherwise use the given model
-    model_dir = 'demo/page_model/export'
+    model_dir = os.path.join(root_folder, 'page_model', 'export')
     if not os.path.exists(model_dir):
-        model_dir = 'demo/model/'
+        model_dir = os.path.join(root_folder, 'model')
 
-    input_files = glob('demo/pages/test_a1/images/*')
-
-    output_dir = 'demo/processed_images'
+    input_files = glob(os.path.join(root_folder, 'pages', 'test_a1', 'images', '*'))[1:2]
+    output_dir = os.path.join(root_folder, 'processed_images')
     os.makedirs(output_dir, exist_ok=True)
     # PAGE XML format output
     output_pagexml_dir = os.path.join(output_dir, PAGE_XML_DIR)
@@ -107,3 +106,6 @@ if __name__ == '__main__':
     # Save txt file
     with open(os.path.join(output_dir, 'pages.txt'), 'w') as f:
         f.write(txt_coordinates)
+
+if __name__ == '__main__':
+    run_demo('demo')

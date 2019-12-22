@@ -22,13 +22,10 @@ RUN conda create -n dh_segment python=3.6
 RUN /bin/bash -c ". activate dh_segment && \
     pip install git+https://github.com/dhlab-epfl/dhSegment@v0.5.0 && \
     conda install tensorflow=1.13.1 && \
-    pip install better-exceptions"
+    pip install better-exceptions && \
+    pip install bottle"
 
 
-# Download pages and models for running the demo of dhsegment. See https://dhsegment.readthedocs.io/en/latest/start/demo.html
-RUN apt-get install unzip -y
-RUN cd /mdlg/demo && wget -q https://github.com/dhlab-epfl/dhSegment/releases/download/v0.2/pages.zip && unzip -q pages.zip
-RUN cd /mdlg/demo && wget -q https://github.com/dhlab-epfl/dhSegment/releases/download/v0.2/model.zip && unzip -q model.zip
-
-# Run the prediction on demo - TO BE REPLACED later with a REST API that wait commands for training/prediction
-CMD /bin/bash -c ". activate dh_segment && ls -al demo && python3 demo.py"
+# Run the REST API (bottle app) on port 3000
+# we expect that the container will have a /data folder shared for getting images and models
+CMD /bin/bash -c ". activate dh_segment && bottle.py -b 0.0.0.0:3000 --reload --debug server:app"
