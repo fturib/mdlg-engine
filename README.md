@@ -64,12 +64,14 @@ Keep open this terminal, to be able to share data with the mdlg-engine container
 
 ```bash
 # verify the server is up by calling the hello world
-wget http://127.0.0.1:3000/hello
+curl http://127.0.0.1:3000/hello
 
 # run the training on default demo (files shared above)
-wget http://127.0.0.1:3000/demo
+curl http://127.0.0.1:3000/demo
 
 # run your own training/prediction for the demo process. You need to initialize properly the volume
 # -> below, will run the demo program on the folder 'whatever' of the mdlg-data volume
-wget http://127.0.0.1:3000/demo/whatever
+curl http://127.0.0.1:3000/demo/whatever
+# -> if you know already the folder in with the volume is mounted, your can call directly with the 'dir' parameter
+curl http://127.0.0.1:3000/demo?dir=/data/whatever
 ```

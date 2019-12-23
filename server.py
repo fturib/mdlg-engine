@@ -10,12 +10,14 @@ def hello():
 @app.route('/demo/<foldername>')
 def demofolder(foldername):
     run_demo(foldername)
+    return template("<p>Demo ran for the folder <b>{{folderdir}}</b></p>", folderdir=foldername)
     # in case of exception, the stacktrace will be visible in the returned value
 
 @app.route('/demo')
 def demo():
     foldername = request.query.dir or "/data/demo"
     run_demo(foldername)
+    return template("<p>Demo ran for the dir <b>{{folderdir}}</b></p>", folderdir=foldername)
     # in case of exception, the stacktrace will be visible in the returned value
 
 
