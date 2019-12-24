@@ -28,7 +28,7 @@ docker build --rm -f "Dockerfile" -t mdlg:latest "."
 Ensure you have a docker server running:
 
 ```bash
-docker run --rm -it -p 3000:3000/tcp -v mdlg-data:/data  mdlg:latest
+docker run --rm -it -p 3000:3000/tcp -v mdlg-data:/data --name mdlg-engine-server mdlg:latest
 ```
 
 ## Build the docker volume for the shared data with mdlg-engine
@@ -66,12 +66,15 @@ Keep open this terminal, to be able to share data with the mdlg-engine container
 # verify the server is up by calling the hello world
 curl http://127.0.0.1:3000/hello
 
-# run the training on default demo (files shared above)
-curl http://127.0.0.1:3000/demo
-
 # run your own training/prediction for the demo process. You need to initialize properly the volume
 # -> below, will run the demo program on the folder 'whatever' of the mdlg-data volume
-curl http://127.0.0.1:3000/demo/whatever
-# -> if you know already the folder in with the volume is mounted, your can call directly with the 'dir' parameter
-curl http://127.0.0.1:3000/demo?dir=/data/whatever
+curl http://127.0.0.1:3000/run/[whatever-path-in-sub-dirs]
+# to run the given demo samples : curl http://127.0.0.1:3000/run/demo
+
+# list files in the data folder
+curl http://127.0.0.1:3000/files
+curl http://127.0.0.1:3000/files/[whatever-path-in-sub-dirs]
+
+# help for available commands
+curl http://127.0.0.1:3000/help
 ```
